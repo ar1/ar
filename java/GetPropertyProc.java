@@ -31,6 +31,7 @@ public class GetPropertyProc extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doPost(request,response);
 		
 	}
@@ -70,7 +71,8 @@ public class GetPropertyProc extends HttpServlet {
 			propertyResult = propdb.getPropertyState(STATE);
 		}
 
-
+		
+		
 		if(propertyResult==null||propertyResult.isEmpty()) {
 			PrintWriter pw = response.getWriter();
 			pw.write("No Result Found!");
@@ -81,7 +83,7 @@ public class GetPropertyProc extends HttpServlet {
 		
 		RequestDispatcher view = request.getRequestDispatcher(jsp);
 		view.forward(request, response);
-			
+		
 	}
 
 }
