@@ -36,7 +36,7 @@ public class PropertyDB {
 			String query = "select * from " + table_name
 					+ " where Upper(CITY)=Upper('" + city
 					+ "') and Upper(state)=Upper('" + state
-					+ "')";
+					+ "') and Ref_Nbr is not null";
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(query);
 
@@ -99,7 +99,7 @@ public class PropertyDB {
 			String query = "select * from " + table_name
 					+ " where Upper(COUNTY)=Upper('" + county
 					+ "') and Upper(state)=Upper('" + state
-					+ "')";
+					+ "') and Ref_Nbr is not null";
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(query);
 
@@ -148,6 +148,193 @@ public class PropertyDB {
 	}
 	
 	public ArrayList<Property> getPropertyState(String state) {
+		ResultSet rs = null;
+		Statement stmt = null;
+		ArrayList<Property> propResult = new ArrayList<Property>();
+		String PROP_NAME;
+		String LAT_CENTROID;
+		String LONG_CENTROID;
+		String Ref_Nbr;
+		Property property = null;
+		try {
+			// Get needed-page content
+			String query = "select * from " + table_name
+					+ " where Upper(state)=Upper('" + state
+					+ "') and Ref_Nbr is not null";
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(query);
+
+			while (rs.next()) {
+				PROP_NAME = rs.getString(2);
+				LAT_CENTROID = rs.getString(10);
+				LONG_CENTROID = rs.getString(11);
+				Ref_Nbr = rs.getString(19);
+//				System.out.println(PROP_NAME);
+//				System.out.println(LAT_CENTROID);
+//				System.out.println(LONG_CENTROID);
+//				System.out.println(Ref_Nbr);
+				
+				property = new Property();
+				property.setPROP_NAME(PROP_NAME);
+				property.setLAT_CENTROID(LAT_CENTROID);
+				property.setLONG_CENTROID(LONG_CENTROID);
+				property.setRef_Nbr(Ref_Nbr);
+
+				propResult.add(property);
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return propResult;
+	}
+	
+	public ArrayList<Property> getPropertyCityAll(String city, 
+			String state) {
+		ResultSet rs = null;
+		Statement stmt = null;
+		ArrayList<Property> propResult = new ArrayList<Property>();
+		String PROP_NAME;
+		String LAT_CENTROID;
+		String LONG_CENTROID;
+		String Ref_Nbr;
+		Property property = null;
+		try {
+			// Get needed-page content
+			String query = "select * from " + table_name
+					+ " where Upper(CITY)=Upper('" + city
+					+ "') and Upper(state)=Upper('" + state
+					+ "')";
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(query);
+
+			while (rs.next()) {
+				PROP_NAME = rs.getString(2);
+				LAT_CENTROID = rs.getString(10);
+				LONG_CENTROID = rs.getString(11);
+				Ref_Nbr = rs.getString(19);
+//				System.out.println(PROP_NAME);
+//				System.out.println(LAT_CENTROID);
+//				System.out.println(LONG_CENTROID);
+//				System.out.println(Ref_Nbr);
+				
+				property = new Property();
+				property.setPROP_NAME(PROP_NAME);
+				property.setLAT_CENTROID(LAT_CENTROID);
+				property.setLONG_CENTROID(LONG_CENTROID);
+				property.setRef_Nbr(Ref_Nbr);
+
+				propResult.add(property);
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return propResult;
+	}
+
+	public ArrayList<Property> getPropertyCountyAll(String county, 
+			String state) {
+		ResultSet rs = null;
+		Statement stmt = null;
+		ArrayList<Property> propResult = new ArrayList<Property>();
+		String PROP_NAME;
+		String LAT_CENTROID;
+		String LONG_CENTROID;
+		String Ref_Nbr;
+		Property property = null;
+		try {
+			// Get needed-page content
+			String query = "select * from " + table_name
+					+ " where Upper(COUNTY)=Upper('" + county
+					+ "') and Upper(state)=Upper('" + state
+					+ "')";
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(query);
+
+			while (rs.next()) {
+				PROP_NAME = rs.getString(2);
+				LAT_CENTROID = rs.getString(10);
+				LONG_CENTROID = rs.getString(11);
+				Ref_Nbr = rs.getString(19);
+//				System.out.println(PROP_NAME);
+//				System.out.println(LAT_CENTROID);
+//				System.out.println(LONG_CENTROID);
+//				System.out.println(Ref_Nbr);
+				
+				property = new Property();
+				property.setPROP_NAME(PROP_NAME);
+				property.setLAT_CENTROID(LAT_CENTROID);
+				property.setLONG_CENTROID(LONG_CENTROID);
+				property.setRef_Nbr(Ref_Nbr);
+
+				propResult.add(property);
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return propResult;
+	}
+	
+	public ArrayList<Property> getPropertyStateAll(String state) {
 		ResultSet rs = null;
 		Statement stmt = null;
 		ArrayList<Property> propResult = new ArrayList<Property>();
