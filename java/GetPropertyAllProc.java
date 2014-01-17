@@ -1,6 +1,7 @@
 package com.apt;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -30,6 +31,17 @@ public class GetPropertyAllProc extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doPost(request,response);
+		
+		
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		System.out.println("all is here");
 		// TODO Auto-generated method stub
 		String CITY = request.getParameter("locality");
 		String STATE = request.getParameter("administrative_area_level_1");
@@ -57,26 +69,23 @@ public class GetPropertyAllProc extends HttpServlet {
 			propertyResult = propdb.getPropertyStateAll(STATE);
 		}
 
+		PrintWriter out = response.getWriter();
+		if(propertyResult==null||propertyResult.isEmpty()) {
+			PrintWriter pw = response.getWriter();
+			pw.write("No Property");
+            return;
+		}	
 		
-		
-		if(propertyResult!=null){
-		
-		request.setAttribute("page_content",propertyResult);
-		
-		RequestDispatcher view = request.getRequestDispatcher("/NextPage");
-		view.forward(request, response);
-		}
-		else{
-			System.out.println("No Property");
-		}
-		
-	}
+	
+		String propNameList="";
+	
+		  for(int i=0; i<propertyResult.size(); i++) {
+		    Property prop = (Property)propertyResult.get(i);
+		    propNameList += "," +  prop.getPROP_NAME();
+		   }
+	      //send the result back
+		    out.write(propNameList);
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 }
